@@ -1,4 +1,4 @@
-package com.mediscreen.diabetesdetect.usermanager.controller;
+package com.mediscreen.diabetesdetect.patientmanager.controller;
 
 import java.util.List;
 import java.util.UUID;
@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mediscreen.diabetesdetect.usermanager.model.Patient;
-import com.mediscreen.diabetesdetect.usermanager.service.UserManagerService;
+import com.mediscreen.diabetesdetect.patientmanager.model.Patient;
+import com.mediscreen.diabetesdetect.patientmanager.service.PatientManagerService;
 
 @RestController
-@RequestMapping(value = "/user")
-public class UserManagerController {
+@RequestMapping(value = "/patient")
+public class PatientManagerController {
 
     @Autowired
-    private UserManagerService service;
+    private PatientManagerService service;
 
     @GetMapping("/getPatientById")
     public Patient getPatientById(@RequestParam(value = "uuid") UUID patientId) {

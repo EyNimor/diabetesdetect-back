@@ -1,4 +1,4 @@
-package com.mediscreen.diabetesdetect.usermanager.service;
+package com.mediscreen.diabetesdetect.patientmanager.service;
 
 import java.util.List;
 import java.util.UUID;
@@ -6,14 +6,14 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mediscreen.diabetesdetect.usermanager.dao.UserRepository;
-import com.mediscreen.diabetesdetect.usermanager.model.Patient;
+import com.mediscreen.diabetesdetect.patientmanager.dao.PatientRepository;
+import com.mediscreen.diabetesdetect.patientmanager.model.Patient;
 
 @Service
-public class UserManagerService {
+public class PatientManagerService {
 
     @Autowired
-    private UserRepository dao;
+    private PatientRepository dao;
 
     public Patient getPatientById(UUID patientId) {
         return dao.findById(patientId.toString()).get();

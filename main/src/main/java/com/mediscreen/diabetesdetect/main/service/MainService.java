@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 
+import com.mediscreen.diabetesdetect.main.feign.HistoryClient;
 import com.mediscreen.diabetesdetect.main.feign.PatientClient;
+import com.mediscreen.diabetesdetect.main.model.History;
 import com.mediscreen.diabetesdetect.main.model.Patient;
 
 import feign.FeignException;
@@ -20,6 +22,9 @@ public class MainService {
     
     @Autowired
     private PatientClient patientClient;
+
+    @Autowired
+    private HistoryClient historyClient;
 
     private Logger logger = LoggerFactory.getLogger(MainService.class);
 
@@ -65,6 +70,31 @@ public class MainService {
             patientToModify.setAddress(newInfo.get("phone").get(0));
         }
         patientClient.savePatient(patientToModify);
+    }
+
+    public List<History> getPatientFullHistoryByPatientId(UUID patientId) {
+        return historyClient.getHistoryByPatientId(patientId);
+    }
+
+    public History findOneNoteFromPatientHistory(UUID noteId) {
+        History history;
+        try {
+            history = historyClient.getOneNote(noteId);
+        } catch(FeignException e) {
+            e.fillInStackTrace();
+            history = null;
+        }
+        return history;
+    }
+
+    public void createAndSaveHistory(MultiValueMap<String, String> newNote) {
+        History history = new History(newNote.get("patId").get(0), newNote.get("e").get(0));
+        historyClient.saveHistory(history);
+    }
+
+    public void modifyHistory(History historyToModify, MultiValueMap<String, String> newInfo) {
+        historyToModify.setNotes(newInfo.get("e").get(0));
+        historyClient.updateHistory(historyToModify);
     }
 
 }

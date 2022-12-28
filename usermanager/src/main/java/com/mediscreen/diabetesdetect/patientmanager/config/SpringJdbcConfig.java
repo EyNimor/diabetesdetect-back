@@ -1,4 +1,4 @@
-package com.mediscreen.diabetesdetect.usermanager.config;
+package com.mediscreen.diabetesdetect.patientmanager.config;
 
 import javax.sql.DataSource;
 

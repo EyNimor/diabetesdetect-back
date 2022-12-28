@@ -1,4 +1,4 @@
-package com.mediscreen.diabetesdetect.usermanager.model;
+package com.mediscreen.diabetesdetect.patientmanager.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
