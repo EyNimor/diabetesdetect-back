@@ -1,0 +1,100 @@
+version: "3.9"
+services:
+  mysqldb:
+    image: mysql
+    container_name: mysqldb
+    restart: always
+    ports:
+      - '6033:3306'
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootroot
+      - MYSQL_DATABASE=patientdatabase
+    volumes:
+      - .mysql-data:/var/lib/mysql
+    networks:
+      - mediscreen-network
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    restart: always
+    ports:
+      - '27017:27017'
+    volumes:
+      - .mongodb-data:/data/db
+    networks:
+      - mediscreen-network
+
+  main:
+    image: diabetesdetect-main
+    container_name: DD-main
+    build:
+      context: main
+      dockerfile: Dockerfile
+    ports: 
+      - "8081:8081"
+      - "5005:5005"
+    depends_on:
+      - patientmanager
+      - historymanager
+      - reportgenerator
+    environment:
+      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005
+    networks:
+      - mediscreen-network
+    restart: always
+
+  patientmanager:
+    image: diabetesdetect-patientmanager
+    container_name: DD-patientmanager
+    build:
+      context: patientmanager
+      dockerfile: Dockerfile
+    ports: 
+      - "8082:8082"
+      - "5006:5006"
+    depends_on:
+      - mysqldb
+    environment:
+      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5006
+    networks:
+      - mediscreen-network
+    restart: always
+
+  historymanager:
+    image: diabetesdetect-historymanager
+    container_name: DD-historymanager
+    build:
+      context: historymanager
+      dockerfile: Dockerfile
+    ports: 
+      - "8083:8083"
+      - "5007:5007"
+    depends_on:
+      - mongodb
+    environment:
+      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5007
+    networks:
+      - mediscreen-network
+    restart: always
+
+  reportgenerator:
+    image: diabetesdetect-reportgenerator
+    container_name: DD-reportgenerator
+    build:
+      context: reportgenerator
+      dockerfile: Dockerfile
+    ports: 
+      - "8084:8084"
+      - "5008:5008"
+    depends_on:
+      - historymanager
+    environment:
+      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5008
+    networks:
+      - mediscreen-network
+    restart: always
+
+networks:
+  mediscreen-network:
+    driver: bridge

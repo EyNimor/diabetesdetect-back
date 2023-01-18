@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.mediscreen.diabetesdetect.main.config.FeignConfiguration;
 import com.mediscreen.diabetesdetect.main.constant.ReportStatus;
 
-@FeignClient(name = "ReportClient", url = "http://localhost:8084/report/", configuration = FeignConfiguration.class)
+@FeignClient(name = "ReportClient", url = "${feign.client.url.reportUrl}", configuration = FeignConfiguration.class)
 public interface ReportClient {
     
     @GetMapping("/generate")

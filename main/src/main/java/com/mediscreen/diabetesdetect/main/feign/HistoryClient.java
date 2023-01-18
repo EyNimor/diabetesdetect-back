@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.mediscreen.diabetesdetect.main.config.FeignConfiguration;
 import com.mediscreen.diabetesdetect.main.model.Note;
 
-@FeignClient(name = "HistoryClient", url = "http://localhost:8083/history/", configuration = FeignConfiguration.class)
+@FeignClient(name = "HistoryClient", url = "${feign.client.url.historyUrl}", configuration = FeignConfiguration.class)
 public interface HistoryClient {
     
     @GetMapping("/getHistoryByPatientId")
