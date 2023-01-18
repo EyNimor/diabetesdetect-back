@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mediscreen.diabetesdetect.historymanager.model.History;
+import com.mediscreen.diabetesdetect.historymanager.model.Note;
 import com.mediscreen.diabetesdetect.historymanager.service.HistoryManagerService;
 
 @RestController
@@ -23,24 +23,24 @@ public class HistoryManagerController {
     private HistoryManagerService service;
 
     @GetMapping("/getHistoryByPatientId")
-    public List<History> getPatientById(@RequestParam(value = "uuid") UUID patientId) {
-        List<History> historic = service.getHistoryByPatientId(patientId);
+    public List<Note> getPatientById(@RequestParam(value = "uuid") UUID patientId) {
+        List<Note> historic = service.getHistoryByPatientId(patientId);
         return historic;
     }
 
     @GetMapping("/getOneNote")
-    public History getOneNote(@RequestParam(value = "uuid") UUID noteId) {
-        History history = service.getOneNoteFromNoteId(noteId.toString());
+    public Note getOneNote(@RequestParam(value = "uuid") UUID noteId) {
+        Note history = service.getOneNoteFromNoteId(noteId.toString());
         return history;
     }
 
     @PostMapping("/saveHistory")
-    public void saveHistory(@RequestBody History newHistory) {
+    public void saveHistory(@RequestBody Note newHistory) {
         service.saveHistory(newHistory);
     }
 
     @PutMapping("/updateHistory")
-    public void updateHistory(@RequestBody History historyToUpdate) {
+    public void updateHistory(@RequestBody Note historyToUpdate) {
         service.updateHistory(historyToUpdate);
     }
 

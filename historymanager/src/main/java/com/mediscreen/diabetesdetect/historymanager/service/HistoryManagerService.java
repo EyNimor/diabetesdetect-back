@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mediscreen.diabetesdetect.historymanager.dao.HistoryRepository;
-import com.mediscreen.diabetesdetect.historymanager.model.History;
+import com.mediscreen.diabetesdetect.historymanager.model.Note;
 
 @Service
 public class HistoryManagerService {
@@ -15,19 +15,19 @@ public class HistoryManagerService {
     @Autowired
 	private HistoryRepository dao;
 
-    public List<History> getHistoryByPatientId(UUID patientId) {
+    public List<Note> getHistoryByPatientId(UUID patientId) {
         return dao.findByPatientId(patientId);
     }
 
-    public void saveHistory(History newHistory) {
+    public void saveHistory(Note newHistory) {
         dao.insert(newHistory);
     }
 
-    public History getOneNoteFromNoteId(String noteId) {
+    public Note getOneNoteFromNoteId(String noteId) {
         return dao.findById(noteId).get();
     }
 
-    public void updateHistory(History historyToUpdate) {
+    public void updateHistory(Note historyToUpdate) {
         dao.deleteById(historyToUpdate.getId());
         dao.insert(historyToUpdate);
     }

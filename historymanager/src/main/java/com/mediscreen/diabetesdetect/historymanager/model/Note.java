@@ -13,23 +13,23 @@ import lombok.ToString;
 @ToString @Getter @Setter
 @NoArgsConstructor
 @Document(collection = "history")
-public class History {
+public class Note {
     
     @Id
     String id;
     UUID patientId;
-    String notes;
+    String body;
 
-    public History(UUID patientId, String notes) {
+    public Note(UUID patientId, String body) {
         this.setId(UUID.randomUUID().toString());
         this.setPatientId(patientId);
-        this.setNotes(notes);
+        this.setBody(body);
     }
 
-    public History(UUID id, UUID patientId, String notes) {
+    public Note(UUID id, UUID patientId, String body) {
         this.setId(id.toString());
         this.setPatientId(patientId);
-        this.setNotes(notes);
+        this.setBody(body);
     }
 
 }

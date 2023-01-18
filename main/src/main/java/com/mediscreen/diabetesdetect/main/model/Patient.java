@@ -1,6 +1,7 @@
 package com.mediscreen.diabetesdetect.main.model;
 
 import java.time.LocalDate;
+import java.util.Locale;
 import java.util.UUID;
 
 import com.mediscreen.diabetesdetect.main.annotation.ExcludeFromJacocoGeneratedReport;
@@ -68,18 +69,16 @@ public class Patient {
     }
     
     public void setSexFromString(String sex) {
+        sex = sex.toUpperCase(Locale.ROOT);
         switch(sex) {
-            case "M": case "H": case "Homme": case "Men":
+            case "M": case "H": case "HOMME": case "MEN":
                 this.sex = Sex.MEN;
                 break;
-            case "F": case "W": case "Femme": case "Women": case "Female":
+            case "F": case "W": case "FEMME": case "WOMEN": case "FEMALE":
                 this.sex = Sex.WOMEN;
                 break;
-            case "I": case "Intersexe": case "Intersex":
-                this.sex = Sex.INTERSEX;
-                break;
             default:
-                throw new IllegalArgumentException("Invalid Sex Value");
+                throw new IllegalArgumentException("Invalid Sex Value : " + sex);
         }
     }
 

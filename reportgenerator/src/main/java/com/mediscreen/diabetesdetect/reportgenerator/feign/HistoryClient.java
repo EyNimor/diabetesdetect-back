@@ -1,4 +1,4 @@
-package com.mediscreen.diabetesdetect.main.feign;
+package com.mediscreen.diabetesdetect.reportgenerator.feign;
 
 import java.util.List;
 import java.util.UUID;
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.mediscreen.diabetesdetect.main.config.FeignConfiguration;
-import com.mediscreen.diabetesdetect.main.model.Note;
+import com.mediscreen.diabetesdetect.reportgenerator.config.FeignConfiguration;
+import com.mediscreen.diabetesdetect.reportgenerator.model.Note;
 
 @FeignClient(name = "HistoryClient", url = "http://localhost:8083/history/", configuration = FeignConfiguration.class)
 public interface HistoryClient {

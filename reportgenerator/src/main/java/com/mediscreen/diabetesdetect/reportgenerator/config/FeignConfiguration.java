@@ -1,11 +1,11 @@
-package com.mediscreen.diabetesdetect.main.config;
+package com.mediscreen.diabetesdetect.reportgenerator.config;
 
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.mediscreen.diabetesdetect.main.annotation.ExcludeFromJacocoGeneratedReport;
+import com.mediscreen.diabetesdetect.reportgenerator.annotation.ExcludeFromJacocoGeneratedReport;
 
 import feign.Retryer;
 

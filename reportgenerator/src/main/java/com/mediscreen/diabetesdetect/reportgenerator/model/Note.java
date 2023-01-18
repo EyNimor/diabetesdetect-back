@@ -1,6 +1,8 @@
-package com.mediscreen.diabetesdetect.main.model;
+package com.mediscreen.diabetesdetect.reportgenerator.model;
 
 import java.util.UUID;
+
+import com.mediscreen.diabetesdetect.reportgenerator.annotation.ExcludeFromJacocoGeneratedReport;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,22 +11,23 @@ import lombok.ToString;
 
 @ToString @Getter @Setter
 @NoArgsConstructor
-public class History {
+@ExcludeFromJacocoGeneratedReport
+public class Note {
     
     UUID id;
     UUID patientId;
-    String notes;
+    String body;
 
-    public History(UUID patientId, String notes) {
+    public Note(UUID patientId, String body) {
         this.setId(UUID.randomUUID());
         this.setPatientId(patientId);
-        this.setNotes(notes);
+        this.setBody(body);
     }
 
-    public History(String patientId, String notes) {
+    public Note(String patientId, String body) {
         this.setId(UUID.randomUUID());
         this.setPatientId(UUID.fromString(patientId));
-        this.setNotes(notes);
+        this.setBody(body);
     }
 
 }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mediscreen.diabetesdetect.main.annotation.ExcludeFromJacocoGeneratedReport;
+import com.mediscreen.diabetesdetect.main.constant.ReportStatus;
 import com.mediscreen.diabetesdetect.main.exception.PatientDoesNotExistException;
 import com.mediscreen.diabetesdetect.main.model.Patient;
 import com.mediscreen.diabetesdetect.main.service.MainService;
@@ -61,6 +62,14 @@ public class PatientEndpointController {
         Patient patientToModify = findPatientById(newInfo.get("id").get(0));
         service.modifyPatient(patientToModify, newInfo);
         return "Profil de Patient mis à jour avec succés !";
+    }
+
+    @GetMapping("/generateReport")
+    @ResponseBody
+    public String generateReport(@RequestParam(value = "id") String patientId) {
+        Patient patient = findPatientById(patientId);
+        ReportStatus result = service.generateReport(patient);
+        return "Niveau de risque pour le patient " + patient.getFirstName() + " " + patient.getLastName() + " ( " + service.calculateAge(patient.getBirthDate()) + "ans ) : " + result.toString();
     }
 
 }

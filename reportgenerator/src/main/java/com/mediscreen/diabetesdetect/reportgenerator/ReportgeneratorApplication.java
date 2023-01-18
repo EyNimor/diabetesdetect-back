@@ -1,18 +1,18 @@
-package com.mediscreen.diabetesdetect.main;
+package com.mediscreen.diabetesdetect.reportgenerator;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-import com.mediscreen.diabetesdetect.main.annotation.ExcludeFromJacocoGeneratedReport;
+import com.mediscreen.diabetesdetect.reportgenerator.annotation.ExcludeFromJacocoGeneratedReport;
 
 @SpringBootApplication
 @EnableFeignClients
 @ExcludeFromJacocoGeneratedReport
-public class MainApplication {
-	
+public class ReportgeneratorApplication {
+
 	public static void main(String[] args) {
-		SpringApplication.run(MainApplication.class, args);
+		SpringApplication.run(ReportgeneratorApplication.class, args);
 	}
 
 }

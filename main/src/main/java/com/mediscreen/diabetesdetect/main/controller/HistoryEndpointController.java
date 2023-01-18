@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mediscreen.diabetesdetect.main.annotation.ExcludeFromJacocoGeneratedReport;
 import com.mediscreen.diabetesdetect.main.exception.HistoryNoteDoesNotExistException;
 import com.mediscreen.diabetesdetect.main.exception.PatientDoesNotExistException;
-import com.mediscreen.diabetesdetect.main.model.History;
+import com.mediscreen.diabetesdetect.main.model.Note;
 import com.mediscreen.diabetesdetect.main.service.MainService;
 
 @RestController
@@ -35,12 +35,12 @@ public class HistoryEndpointController {
 
     @GetMapping("/findByPatientId")
     @ResponseBody
-    public List<History> findPatientHistory(@RequestParam(value = "patId") String stringPatientId) {
+    public List<Note> findPatientHistory(@RequestParam(value = "patId") String stringPatientId) {
         UUID patientId = UUID.fromString(stringPatientId);
         if(service.getPatientFromID(patientId) == null) {
             throw new PatientDoesNotExistException(stringPatientId);
         } else {
-            List<History> patientHistory = service.getPatientFullHistoryByPatientId(patientId);
+            List<Note> patientHistory = service.getPatientFullHistoryByPatientId(patientId);
             return patientHistory;
         }
     }
@@ -48,18 +48,18 @@ public class HistoryEndpointController {
     @PostMapping(path = "/addNote", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
     @ResponseBody
     public String addNote(@RequestBody MultiValueMap<String, String> newNote) {
-        service.createAndSaveHistory(newNote);
+        service.createAndSaveNoteToHistory(newNote);
         return "Note ajouté avec succés !";
     }
 
     @PutMapping(path = "/updateNote", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
     @ResponseBody
     public String updateNote(@RequestParam MultiValueMap<String, String> newInfo) {
-        History historyToModify = service.findOneNoteFromPatientHistory(UUID.fromString(newInfo.get("id").get(0)));
+        Note historyToModify = service.findOneNoteFromPatientHistory(UUID.fromString(newInfo.get("id").get(0)));
         if(historyToModify == null) {
             throw new HistoryNoteDoesNotExistException(newInfo.get("id").get(0));
         } else {
-            service.modifyHistory(historyToModify, newInfo);
+            service.modifyNote(historyToModify, newInfo);
             return "Note modifié avec succés !";
         }
     }
